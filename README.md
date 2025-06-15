@@ -26,7 +26,6 @@ Meet.io is a modern, feature-rich video conferencing platform built with Next.js
 - **UI Components:** Radix UI
 - **Form Handling:** React Hook Form
 - **State Management:** React Query
-- **Email:** React Email, Resend
 - **Deployment:** Vercel
 
 ## Prerequisites
