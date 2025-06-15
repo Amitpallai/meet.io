@@ -96,5 +96,3 @@ Amit Kumar Pallai
 <<<<<<< HEAD
 [Portfolio](https://amitpallai.vercel.app)
 =======
-[Portfolio](https://amitpallai.vercel.app)
->>>>>>> d5f8289d3bfe27962029487eab2e4714dd025168
