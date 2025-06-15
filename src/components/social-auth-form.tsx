@@ -5,13 +5,12 @@ import { Icons } from './ui/icons';
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
-import { FaGithub } from "react-icons/fa";
-import { FaGoogle } from "react-icons/fa";
-
+ import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { GoogleIcon } from "@100mslive/react-icons";
 
 const socialProviders = [
-  { name: "github", color: "#FFF", icon: FaGithub },
-  { name: "google", color: "#0f172a", icon:FaGoogle },
+  { name: "github", color: "#FFF", icon: GitHubLogoIcon },
+  { name: "google", color: "#0f172a", icon:GoogleIcon },
 ];
 
 export default function SocialAuthForm () {
@@ -57,7 +56,7 @@ export default function SocialAuthForm () {
           key={provider.name}
           size="lg"
           className="font-normal px-1"
-          variant={provider.name === "github" ? "default" : "outline"}
+          variant={provider.name === "github" ? "outline" : "outline"}
           onClick={() => handleSocialSignIn(provider.name)}
           disabled={isSocialLoading[provider.name]}
         >
@@ -65,7 +64,7 @@ export default function SocialAuthForm () {
             <Icons.spinner 
               width="16" 
               height="16" 
-              className="mr-3 px-2"
+              className="mx-3 px-2"
             />
           ) : (
             <provider.icon 
