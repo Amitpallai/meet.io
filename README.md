@@ -49,7 +49,7 @@ Meet.io is a modern, feature-rich video conferencing platform built with Next.js
 ### 2. Install dependencies
 
 ```sh
-pnpm install
+npm install
 ```
 
 ### 3. Configure environment variables
@@ -60,23 +60,23 @@ pnpm install
 ### 4. Set up the database
 
 ```sh
-pnpm exec prisma migrate dev
+npm exec prisma migrate dev
 ```
 
 ### 5. Run the development server
 
 ```sh
-pnpm dev
+npm dev
 ```
 
 Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ## Scripts
 
-- `pnpm dev` – Start the development server
-- `pnpm build` – Build for production
-- `pnpm start` – Start the production server
-- `pnpm lint` – Lint the codebase
+- `npm dev` – Start the development server
+- `npm build` – Build for production
+- `npm start` – Start the production server
+- `npm lint` – Lint the codebase
 
 ## Tech Stack
 
