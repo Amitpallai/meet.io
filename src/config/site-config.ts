@@ -17,6 +17,6 @@ export const siteConfig: SiteConfig = {
   ogImage: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/web-shot.png`,
   links: {
     twitter: "https://x.com/amit_pallai",
-    github: "https://github.com/Amit6841",
+    github: "https://github.com/Amitpallai",
   },
 }
