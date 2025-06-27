@@ -6,6 +6,7 @@ import { Icons } from "~/components/ui/icons";
 import { Button } from "~/components/ui/button";
 import { siteConfig } from "~/config/site-config";
 import { FaGithub } from "react-icons/fa";
+import { FeaturesSection } from "~/components/layout/features";
 
 type Tool = {
   name: string;
@@ -84,7 +85,7 @@ const tools: Tool[] = [
 export default function IndexPage() {
   return (
     <div className="w-full">
-      <section className="container mx-auto h-screen w-full py-16 lg:py-24">
+      <section className="container mx-auto w-full py-16 lg:py-24">
         <div className="flex flex-col items-center gap-16 text-center">
           <div className="flex flex-col items-center justify-center gap-4 sm:gap-8">
             <Link
@@ -115,7 +116,11 @@ export default function IndexPage() {
         </div>
       </section>
 
-      <section className="container mx-auto w-full pb-12 md:pb-16 lg:pb-24">
+      <section>
+        <FeaturesSection/>
+      </section>
+
+      <section className="container mx-auto w-[100%] p-12 md:pb-16 lg:pb-24">
         <div className="flex w-full flex-col items-center gap-8 text-center">
           <div className="text-center">
             <p className="text-base text-muted-foreground sm:text-lg">
