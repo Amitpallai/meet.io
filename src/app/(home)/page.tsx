@@ -84,11 +84,11 @@ const tools: Tool[] = [
 
 export default function IndexPage() {
   return (
-    <div className="w-full">
-      <section className="container mx-auto w-full py-16 lg:py-24">
+    <div>
+      <section className="container h-screen mx-auto w-[100vw] py-16 lg:py-24">
         <div className="flex flex-col items-center gap-16 text-center">
           <div className="flex flex-col items-center justify-center gap-4 sm:gap-8">
-            <Link
+            <Link 
               href={siteConfig.links.github}
               className={`${badgeVariants({ variant: "secondary" })} w-fit gap-2`}
               target="_blank"
@@ -116,7 +116,7 @@ export default function IndexPage() {
         </div>
       </section>
 
-      <section>
+      <section className="w-[100vw]">
         <FeaturesSection/>
       </section>
 
