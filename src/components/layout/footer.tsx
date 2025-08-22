@@ -17,7 +17,7 @@ export default function SiteFooter() {
         <p className="flex text-xs leading-5 text-neutral-500 justify-center gap-1 ">
           &copy; {`${year}`} Built by 
           <Link
-            href="https://github.com/Amitpallai"
+            href="https://amitpallai.vercel.app"
             className="underline hover:text-neutral-600"
           >
              Amit pallai
