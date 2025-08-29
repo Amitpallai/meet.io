@@ -1,6 +1,6 @@
 import { Mic, MicOff, Video, VideoOff } from "lucide-react";
 import { useHMSStore, selectIsPeerAudioEnabled, selectIsPeerVideoEnabled } from "@100mslive/react-sdk";
-
+import Image from "next/image";
 interface ParticipantItemProps {
     peer: {
         id: string;
@@ -20,7 +20,7 @@ export function ParticipantItem({ peer }: ParticipantItemProps) {
         <div className="flex items-center justify-between p-2 rounded-md hover:bg-neutral-800">
             <div className="w-full flex items-center gap-2 justify-between">
                 {peer.userImage ? (
-                    <img
+                    <Image
                         src={peer.userImage}
                         alt={peer.name}
                         className="w-8 h-8 rounded-full object-cover"

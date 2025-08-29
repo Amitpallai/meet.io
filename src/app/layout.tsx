@@ -4,6 +4,7 @@ import CallIdProvider from "~/context/call-id-context";
 import { Toaster } from "~/components/ui/toaster";
 import { siteConfig } from "~/config/site-config";
 import { Inter } from "next/font/google";
+import type { Metadata } from "next";
 import { ThemeProvider } from "~/components/theme-provider";
 import Script from "next/script";
 
@@ -16,7 +17,7 @@ export const viewport = {
   ],
 };
 
-export const metadata = {
+export const metadata:Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,

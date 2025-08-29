@@ -78,9 +78,10 @@ export async function POST(req: Request) {
             });
         }
 
-        cookies().set('room-id', call.id)
-        cookies().set('room-name', call.name)
-        
+       const cookieStore = await cookies();
+        cookieStore.set('room-id', call.id);
+        cookieStore.set('room-name', call.name);
+
         return new Response(JSON.stringify(participant), {
             headers: {
                 'Content-Type': 'application/json',

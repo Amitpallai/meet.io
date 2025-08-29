@@ -1,10 +1,11 @@
 "use client"
 import { selectIsPeerVideoEnabled, selectIsPeerAudioEnabled, useHMSStore, useVideo } from "@100mslive/react-sdk";
 import Avatar from "./avatar";
-import {  MicOff, Video, VideoOff } from "lucide-react";
+import { MicOff, Video, VideoOff } from "lucide-react";
 import { useRef, useState } from "react";
 import { useToast } from "~/components/ui/use-toast";
 import React from "react";
+import Image from "next/image";
 
 
 interface PeerProps {
@@ -13,7 +14,7 @@ interface PeerProps {
         isLocal: boolean;
         name: string;
         id: string;
-        userImage?: string; 
+        userImage?: string;
     }
 }
 
@@ -34,7 +35,7 @@ export default function Peer({ peer }: PeerProps) {
             try {
                 // Set the video element
                 hmsVideoRef(videoRef.current);
-                
+
                 // Force video element to play
                 videoRef.current.play().catch(error => {
                     console.error('Error playing video:', error);
@@ -99,10 +100,11 @@ export default function Peer({ peer }: PeerProps) {
     }, [hmsVideoRef, peer.id, peer.isLocal, isVideoOn, toast, peer.videoTrack]);
 
     return (
-        <div className="relative h-full w-full rounded-md overflow-hidden bg-neutral-800">
+    <div className="relative h-full w-full rounded-md overflow-hidden bg-neutral-800 ">
+
             {(!isVideoOn || videoError || !peer.videoTrack) ? (
                 peer.userImage ? (
-                    <img
+                    <Image
                         src={peer.userImage}
                         alt={peer.name}
                         className="absolute inset-0 w-full h-full object-cover rounded-md"
@@ -112,18 +114,18 @@ export default function Peer({ peer }: PeerProps) {
                 )
             ) : null}
             {!peer.videoTrack && isVideoOn && !videoError && (
-                 <div className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black/50 z-20">
-                     No video track available.
-                 </div>
+                <div className="absolute inset-0 flex items-center justify-center text-white text-lg font-semibold bg-black/50 z-20">
+                    No video track available.
+                </div>
             )}
-            <div className="absolute top-2 right-2 flex items-center gap-1 z-10">
+            <div className="absolute top-2 right-2 flex items-center gap-1 ">
                 {!isAudioOn && (
                     <div className="bg-black/50 p-1 rounded-full">
                         <MicOff className="h-4 w-4 text-white" />
                     </div>
                 )}
                 {/* Optionally show video status if needed */}
-                 {isVideoOn && !videoError ? (
+                {isVideoOn && !videoError ? (
                     <div className="bg-black/50 p-1 rounded-md">
                         <Video className="h-4 w-4 text-green-500" />
                     </div>
@@ -131,16 +133,16 @@ export default function Peer({ peer }: PeerProps) {
                     <div className="bg-black/50 p-1 rounded-md">
                         <VideoOff className="h-4 w-4 text-red-500" />
                     </div>
-                )} 
+                )}
             </div>
             <div className="relative h-full">
-                <video
+                <video 
                     ref={videoRef}
                     className="scale-x-[-1] object-cover h-full w-full rounded-md"
                     autoPlay
                     muted
                     playsInline
-     
+
                 />
                 <div className="absolute bottom-2 left-2 flex items-center">
                     <span className="text-white text-sm font-semibold truncate max-w-[80%] px-2 py-1 rounded-md">{peer.name} {peer.isLocal ? "(You)" : ""}</span>

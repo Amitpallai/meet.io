@@ -84,17 +84,17 @@ const tools: Tool[] = [
 
 export default function IndexPage() {
   return (
-    <div>
-      <section className="container h-screen mx-auto w-[100vw] py-16 lg:py-24">
+    <div className="w-auto">
+      <section className="container h-screen mx-auto w-full py-16 lg:py-24">
         <div className="flex flex-col items-center gap-16 text-center">
           <div className="flex flex-col items-center justify-center gap-4 sm:gap-8">
-            <Link 
+            <Link
               href={siteConfig.links.github}
               className={`${badgeVariants({ variant: "secondary" })} w-fit gap-2`}
               target="_blank"
               rel="noreferrer"
             >
-              <FaGithub/>
+              <FaGithub />
               Find the project on Github
               <Icons.chevronRight className="ml-1 h-4 w-4" />
             </Link>
@@ -104,23 +104,28 @@ export default function IndexPage() {
             <p className="max-w-2xl text-base text-muted-foreground sm:text-lg">
               {siteConfig.description}
             </p>
-            <div className="space-x-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/calls">
-                <Button size="lg" className="animate-pulse">Start a Meeting</Button>
+                <Button size="lg" className="animate-pulse w-full sm:w-auto">
+                  Start a Meeting
+                </Button>
               </Link>
               <Link href="/calls">
-                <Button variant="outline" size="lg">Join a Meeting</Button>
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                  Join a Meeting
+                </Button>
               </Link>
             </div>
+
           </div>
         </div>
       </section>
 
-      <section className="w-[100vw]">
-        <FeaturesSection/>
+      <section className="w-full">
+        <FeaturesSection />
       </section>
 
-      <section className="container mx-auto w-[100%] p-12 md:pb-16 lg:pb-24">
+      <section className="container mx-auto w-full p-12 md:pb-16 lg:pb-24">
         <div className="flex w-full flex-col items-center gap-8 text-center">
           <div className="text-center">
             <p className="text-base text-muted-foreground sm:text-lg">
@@ -141,7 +146,7 @@ export default function IndexPage() {
         </div>
       </section>
 
-     
+
     </div>
   );
 }

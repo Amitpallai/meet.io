@@ -17,6 +17,7 @@ export default function SocialAuthForm () {
   const [isSocialLoading, setIsSocialLoading] = React.useState<{ [key: string]: boolean }>({});
   const { toast } = useToast()
   const searchParams = useSearchParams()
+  
   const router = useRouter()
 
   const handleSocialSignIn = (provider: string) => {

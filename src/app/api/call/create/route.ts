@@ -83,9 +83,10 @@ export async function POST(req: Request) {
         });
 
         //store room code in session
-        cookies().set('room-id', newCall.id)
-        cookies().set('room-name', newCall.name)
-    
+         const cookieStore = await cookies();
+        cookieStore.set('room-id', newCall.id);
+        cookieStore.set('room-name', newCall.name);
+
         return new Response(JSON.stringify({ success: true }), {
             headers: {
                 'Content-Type': 'application/json',

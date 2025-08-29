@@ -1,5 +1,6 @@
 import { type Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import SocialAuthForm from "~/components/social-auth-form";
 import { AuthLayout } from "~/components/auth/auth-layout";
 import {
@@ -26,7 +27,12 @@ export default function LoginPage() {
             Enter your credentials to access your account
           </CardDescription>
         </CardHeader>
-        <SocialAuthForm />
+
+        {/* ✅ Wrap in Suspense to fix useSearchParams error */}
+        <Suspense fallback={<div>Loading...</div>}>
+          <SocialAuthForm />
+        </Suspense>
+
         <CardFooter className="flex flex-col space-y-4 py-4">
           <div className="text-center text-sm">
             Don&apos;t have an account?{" "}

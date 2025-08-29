@@ -57,7 +57,7 @@ export default function RejoinCall({
   const strokeDashoffset = ((30 - secondsLeft) / 30) * 283;
 
   return (
-    <section className="fixed inset-0 z-100 flex h-screen w-screen items-center justify-center bg-background">
+    <section className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center bg-background">
       <div className="absolute left-6 top-6 flex items-center gap-4">
         <div className="relative flex h-12 w-12 gap-2">
           <svg width="100%" height="100%" viewBox="0 0 100 100">

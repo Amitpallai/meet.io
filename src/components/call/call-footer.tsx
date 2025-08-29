@@ -80,7 +80,7 @@ export default function CallFooter({ onToggleSidebar, isSidebarOpen }: CallFoote
   }, [actions, isScreenShareEnabled, toast])
 
   return (
-    <footer className={`flex items-center mt-auto z-50 justify-between px-6 py-4 bg-transparent`}>
+    <footer className={`flex items-center mt-auto justify-between px-6 py-4 bg-transparent`}>
       <div className="flex items-center gap-2">
         <Button 
           size="sm"

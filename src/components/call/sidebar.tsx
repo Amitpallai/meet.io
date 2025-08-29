@@ -1,7 +1,7 @@
 "use client"
 
 import { selectPeers, useHMSStore, useHMSActions, selectMessagesMap, selectLocalPeer } from "@100mslive/react-sdk";
-import {  Send } from "lucide-react";
+import { Send,PanelLeftOpen} from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -71,16 +71,24 @@ export default function Sidebar({ isOpen, onToggleSidebar, activeTab }: SidebarP
     };
 
     return (
-        <div 
-            className={`w-96 h-full bg-neutral-900 border-l border-neutral-800 flex flex-col fixed p-4 right-0 top-0 transition-transform duration-300 ease-in-out ${
-                isOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
+        <div
+            className={`w-96 h-full bg-neutral-900 border-l border-neutral-800 flex flex-col fixed p-4 right-0 top-0 z-10  transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full z-[10000]'
+                }`}
         >
-            <div className="flex items-center justify-between mb-4">
+
+            <div className="relative flex items-center justify-between mb-4 gap-2">
+                <Button 
+                          size="sm"
+                          variant="ghost" 
+                          onClick={() => onToggleSidebar("participants")}
+                          className="rounded-md py-6 bg-neutral-800 text-neutral-200 hover:bg-neutral-700"
+                        >
+                            <PanelLeftOpen  className="h-5 w-5" />
+                        </Button>   
                 <div className="flex rounded-lg p-1 w-full bg-neutral-800">
                     <Button
                         variant="ghost"
-                        className={`flex-1 text-base font-medium rounded-md py-2 relative ${activeTab === "chat" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}
+                        className={`flex-1 text-base text-sm font-medium rounded-md py-2 relative  ${activeTab === "chat" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}
                         onClick={() => {
                             onToggleSidebar("chat");
                             setHasUnreadMessages(false);
@@ -93,13 +101,13 @@ export default function Sidebar({ isOpen, onToggleSidebar, activeTab }: SidebarP
                     </Button>
                     <Button
                         variant="ghost"
-                        className={`flex-1 text-base font-medium rounded-md py-2 ${activeTab === "participants" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}
+                        className={`flex-1 text-base text-sm font-medium rounded-md py-2 ${activeTab === "participants" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}
                         onClick={() => onToggleSidebar("participants")}
                     >
                         Participants ({peers.length})
                     </Button>
                 </div>
-            
+
             </div>
 
             <div className="flex-1 overflow-y-auto pb-4 no-scrollbar">
@@ -118,7 +126,7 @@ export default function Sidebar({ isOpen, onToggleSidebar, activeTab }: SidebarP
                                                 </span>
                                                 <span className="text-gray-500 ml-2 text-xs">{formatTime(msg.time)}</span>
                                             </div>
-                                            <div className={`text-sm ${isLocalSender ? 'text-end':'text-start'}`} >
+                                            <div className={`text-sm ${isLocalSender ? 'text-end' : 'text-start'}`} >
                                                 {msg.message}
                                             </div>
                                         </div>
@@ -127,7 +135,7 @@ export default function Sidebar({ isOpen, onToggleSidebar, activeTab }: SidebarP
                             })}
                         </div>
                         <div className="flex gap-2 items-center">
-                           
+
                             <Input
                                 placeholder="Send a message..."
                                 value={message}

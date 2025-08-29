@@ -17,19 +17,20 @@ import { prisma } from "~/server/db";
 export default async function HistoryPage({ 
     searchParams 
 }: {
-    searchParams: { 
+    searchParams: Promise<{ 
         page: string,
         per_page: string,
-    }
+    }>
 }){
 
+    const resolvedSearchParams = await searchParams;
     const user = await getCurrentUser();
 
-    if(searchParams.page === undefined || searchParams.per_page === undefined){
+    if(resolvedSearchParams.page === undefined || resolvedSearchParams.per_page === undefined){
         redirect("/calls/history?page=1&per_page=10")
     }
 
-    const { page, per_page } = searchParams;
+    const { page, per_page } = resolvedSearchParams;
 
     if (!user) {
       redirect("/login")
