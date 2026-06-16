@@ -1,42 +1,253 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Docker
+docker-compose.override.yml
+docker-compose.*.yml
+!.dockerignore
+.dockerignore
+Dockerfile
+Dockerfile.*
+.docker/
+docker-sync.yml
+docker-sync/
+*.dockerignore
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Container runtime
+*.pid
+*.log
+*.tmp
+*.temp
 
-# testing
-/coverage
+# Environment variables
+.env
+.env.*
+!.env.example
+!.env.local.example
+.env.production
+.env.development
+.env.test
+.env.staging
 
-# database
-/prisma/db.sqlite
-/prisma/db.sqlite-journal
-
-# next.js
-/.next/
-/out/
-next-env.d.ts
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Node.js
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-
-# local env files
-# do not commit any .env files to git, except for the .env.example file. https://create.t3.gg/en/usage/env-variables#using-environment-variables
-.env
-.env*.local
-
-# vercel
-.vercel
-
-# typescript
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 *.tsbuildinfo
+
+# Next.js
+.next/
+out/
+build/
+dist/
+.vercel
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# TypeScript
+*.tsbuildinfo
+*.js.map
+*.d.ts.map
+
+# Testing
+coverage/
+.nyc_output/
+. jest/
+__tests__/__snapshots__/
+*.test.js
+*.spec.js
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.sqlite-journal
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+
+# Compression
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.tgz
+
+# Build outputs
+*.o
+*.so
+*.dll
+*.dylib
+*.exe
+*.pdb
+*.class
+
+# Docker volumes (local development)
+volumes/
+data/
+tmp/
+temp/
+*.volume
+
+# Secrets
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+*.jks
+*.keystore
+secrets/
+secret/
+credentials/
+
+# Docker-specific
+.dockerconfig.json
+.dockerenv
+.dockerignore
+!Dockerfile.prod
+!Dockerfile.dev
+
+# Application-specific
+public/uploads/
+public/files/
+static/uploads/
+media/
+uploads/
+temp/
+
+# Cache
+.cache/
+cache/
+*.cache
+*.min.css
+*.min.js
+*.map
+
+# Next.js specific
+.next/
+out/
+.vercel/
+.next/cache/
+.next/build/
+
+# Prisma
+prisma/*.db
+prisma/*.sqlite
+prisma/*.sqlite-journal
+prisma/migrations/*.sql
+!prisma/migrations/migration_lock.toml
+
+# Sentry
+.sentryclirc
+.sentry/
+.sentry-native/
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Webstorm
+.webstorm/
+
+# Turbo
+.turbo/
+
+# Storybook
+storybook-static/
+.storybook/
+
+# ESLint
+.eslintcache
+
+# Prettier
+.prettiercache
+
+# Tailwind
+tailwind.config.js
+postcss.config.js
+
+# Jest
+.jest-cache/
+
+# Dev containers
+.devcontainer/
+.devcontainer.json
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+terraform.tfvars.json
+
+# Kubernetes
+*.kubeconfig
+*.k8s.yaml
+*.k8s.yml
+!k8s/*.yaml
+!k8s/*.yml
+
+# Helm
+*.tgz
+charts/*.tgz
+Chart.lock
+
+# Ansible
+*.retry
+*.hosts
+*.inventory
+!inventory.example
+
+# Git
+*.patch
+*.diff
+.gitattributes
+.gitkeep
+
+# Local development
+local/
+development/
+staging/
+test/

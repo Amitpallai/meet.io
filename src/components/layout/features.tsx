@@ -1,119 +1,107 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { motion, type Variants } from 'framer-motion';
 import { Video, Users, Share2, Shield, MessageSquare, Globe } from 'lucide-react';
 
-// ✅ Static feature list (safe, no dependency warning)
 const FEATURES = [
   {
     icon: Video,
-    title: 'HD Video & Audio',
-    description: 'Crystal-clear 1080p video and studio-quality audio for professional meetings.',
+    title: 'Studio-grade video',
+    description:
+      '1080p video and noise-cancelled audio that holds up on hotel wifi.',
   },
   {
     icon: Users,
-    title: 'Up to 100 Participants',
-    description: 'Host large-scale meetings, webinars, and virtual events with ease.',
+    title: 'Room for everyone',
+    description:
+      'Host calls, webinars, and all-hands with up to 100 people in one room.',
   },
   {
     icon: Share2,
-    title: 'Screen Sharing',
-    description: 'Share your entire screen, specific applications, or browser tabs seamlessly.',
+    title: 'Share anything',
+    description:
+      'Share a tab, an app, or your whole screen — no plug-in, no permissions dance.',
   },
   {
     icon: Shield,
-    title: 'End-to-End Encryption',
-    description: 'Bank-level security with AES 256-bit encryption for all your conversations.',
+    title: 'Locked by default',
+    description:
+      'AES-256 encryption on every call, switched on automatically.',
   },
   {
     icon: MessageSquare,
-    title: 'Live Chat & Reactions',
-    description: 'Interactive chat, polls, and emoji reactions to keep everyone engaged.',
+    title: 'Side conversations',
+    description:
+      'Chat, react, and raise a hand without interrupting whoever is talking.',
   },
   {
     icon: Globe,
-    title: 'Global CDN',
-    description: 'Lightning-fast connections with our worldwide network of servers.',
+    title: 'Fast, wherever you are',
+    description: 'A global network keeps latency low, from Lagos to Lima.',
   },
 ];
 
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 export function FeaturesSection() {
-  const [visibleFeatures, setVisibleFeatures] = useState<number[]>([]);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // ✅ Fallback: show all features instantly if no IntersectionObserver (SSR or unsupported browser)
-    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
-      setVisibleFeatures(FEATURES.map((_, i) => i));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute('data-index') || '0');
-            setVisibleFeatures((prev) =>
-              prev.includes(index) ? prev : [...prev, index]
-            );
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const featureElements = sectionRef.current?.querySelectorAll('[data-index]');
-    featureElements?.forEach((el) => observer.observe(el));
-
-    return () => {
-      featureElements?.forEach((el) => observer.unobserve(el));
-      observer.disconnect();
-    };
-  }, []); // ✅ empty dependency is fine since FEATURES is constant
-
   return (
-    <section id="features" className="py-24 bg-muted/20" ref={sectionRef}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Everything you need for perfect meetings
+    <section id="features" className="relative py-24 md:py-32">
+      <div className="container mx-auto max-w-[1100px] px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto max-w-xl text-center"
+        >
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#FF5D3A]">
+            Why teams switch
+          </span>
+          <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+            No lag. No logins. No &ldquo;can everyone see my screen?&rdquo;
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Powerful features designed to make your video conferences more productive,
-            secure, and engaging.
+          <p className="mt-4 text-muted-foreground">
+            Meet.io handles the technical part of meeting, so your team can
+            focus on the conversation.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {FEATURES.map((feature, index) => (
-            <div
-              key={index}
-              data-index={index}
-              className={`group p-8 bg-card rounded-xl border border-border hover:shadow-lg transition-all duration-500 ${
-                visibleFeatures.includes(index)
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-8'
-              }`}
-              style={{
-                transitionDelay: visibleFeatures.includes(index)
-                  ? `${index * 100}ms`
-                  : '0ms',
-              }}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {FEATURES.map((feature) => (
+            <motion.div
+              key={feature.title}
+              variants={item}
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 transition-colors duration-300 hover:border-[#FF5D3A]/40"
             >
-              <div className="flex items-center mb-4">
-                <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors duration-300">
-                  <feature.icon className="h-6 w-6 text-primary" />
-                </div>
+              <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#FF5D3A]/0 blur-2xl transition-colors duration-500 group-hover:bg-[#FF5D3A]/10" />
+              <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-muted/60 text-[#FF5D3A]">
+                <feature.icon className="h-5 w-5" strokeWidth={1.75} />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <h3 className="text-lg font-semibold">{feature.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {feature.description}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

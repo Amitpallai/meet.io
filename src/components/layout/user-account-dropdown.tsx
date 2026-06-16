@@ -1,5 +1,6 @@
 "use client"
 import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import UserAvatarLabelGroup from '../user-avatar-label-group';
 import { useToast } from '../ui/use-toast';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
@@ -17,8 +18,8 @@ interface DropdownProps {
 }
 
 export default function UserAccountDropdown({ user }: DropdownProps) {
-
     const { toast } = useToast()
+    const router = useRouter()
 
     return (
         <DropdownMenu>
@@ -32,14 +33,24 @@ export default function UserAccountDropdown({ user }: DropdownProps) {
                 <DropdownMenuLabel>Your Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem disabled>
+                    <DropdownMenuItem
+                        className='cursor-pointer'
+                        onClick={() => router.push('/calls/profile')}
+                    >
                         <Icons.avatar width="16" height="16" className='mr-2'/>
                         Profile
                     </DropdownMenuItem>
-                    <DropdownMenuItem disabled>
+
+                    <DropdownMenuItem
+                        className='cursor-pointer'
+                        onClick={() => router.push('/calls/settings')}
+                    >
                         <Icons.settings width="16" height="16" className='mr-2'/>
-                        Settings</DropdownMenuItem>
+                        Settings
+                    </DropdownMenuItem>
+
                     <DropdownMenuSeparator />
+
                     <DropdownMenuItem
                         className='cursor-pointer'
                         onClick={(event) => {

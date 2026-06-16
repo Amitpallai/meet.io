@@ -1,148 +1,140 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-"use client"
-import React from 'react'
-import { useRouter } from 'next/navigation'
-import { useCallId } from '~/context/call-id-context';
-import { useToast } from '../ui/use-toast';
-import { Button } from '../ui/button';
-import { cn } from '~/lib/utils';
-import { Icons } from '../ui/icons';
+"use client";
+
+import React from "react";
+import { useRouter } from "next/navigation";
+import { Video, Play, Clock } from "lucide-react";
+
+import { useCallId } from "~/context/call-id-context";
+import { useToast } from "../ui/use-toast";
+import { Button } from "../ui/button";
+import { cn } from "~/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle
-} from '../ui/dialog';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
-import { env } from '~/env.mjs';
-import useClipboard from '~/hooks/use-copy';
+  DialogTitle,
+} from "../ui/dialog";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { env } from "~/env.mjs";
+import useClipboard from "~/hooks/use-copy";
 
 export default function CreateCallCard() {
-  const { toast } = useToast()
-  const router = useRouter()
+  const { toast } = useToast();
+  const router = useRouter();
   const { callId } = useCallId();
   const [showCallMenu, setShowCallMenu] = React.useState(false);
   const [showCallLinkDialog, setShowCallLinkDialog] = React.useState(false);
   const { isCopied, copyToClipboard } = useClipboard();
+  const isCreated = React.useRef(false); // prevent double-create
 
-  // Close menu when clicking outside
+  // Pre-create room on mount
+  React.useEffect(() => {
+    if (isCreated.current) return;
+    isCreated.current = true;
+
+    void fetch(`/api/call/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ callName: callId, audio: true, video: true }),
+    });
+  }, [callId]);
+
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (!target.closest('.call-menu')) {
+      if (!target.closest(".call-menu")) {
         setShowCallMenu(false);
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  async function createCall() {
-    const response = await fetch(`/api/call/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        callName: callId,
-        audio: true,
-        video: true,
-      }),
-    })
-
-    if (!response?.ok) {
-      toast({
-        title: "Error",
-        description: "Failed to create call. Please try again.",
-        variant: "destructive",
-      });
-    }
-  }
+  const meetingUrl = `${env.NEXT_PUBLIC_APP_URL}/call/${callId}`;
 
   return (
-    <div className='relative'>
-      <div className="call-menu">
-        <Button
-          variant="ghost"
-          className="w-full h-full bg-black dark:text-black dark:bg-white text-white"
-          onClick={() => setShowCallMenu(!showCallMenu)}
-        >
-          <Icons.add className="mr-2 h-4 w-4" />
-          Create Call
-        </Button>
+    <div className="relative call-menu w-full h-full">
+      <button
+        type="button"
+        className="group flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl border bg-card p-6 text-center transition-colors hover:border-primary/40 hover:bg-accent/40"
+        onClick={() => setShowCallMenu(!showCallMenu)}
+      >
+        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
+          <Video className="h-5 w-5" />
+        </span>
+        <span className="text-sm font-medium">New call</span>
+        <span className="text-xs text-muted-foreground">
+          Start or schedule a call
+        </span>
+      </button>
 
-        {showCallMenu && (
-          <div className={cn(
-            "absolute right-0 mt-1 p-0 shadow-sm bg-black border rounded-sm min-w-[200px] z-50",
-            "animate-in fade-in-0 zoom-in-95 text-white"
-          )}>
-            <button
-              className="w-full px-2 py-1.5 text-sm text-left hover:bg-accent"
-              onClick={async () => {
-                await createCall();
-                setShowCallMenu(false);
-                router.push(`/call/${callId}`)
-              }}
-            >
-              Start a call now
-            </button>
-            <div className="h-px bg-border " />
-            <button
-              className="w-full px-2 py-1.5 text-sm text-left hover:bg-accent"
-              onClick={async () => {
-                await createCall();
-                setShowCallMenu(false);
-                setShowCallLinkDialog(true);
-              }}
-            >
-              Create call for later
-            </button>
-          </div>
-        )}
-      </div>
+      {showCallMenu && (
+        <div
+          className={cn(
+            "absolute left-1/2 top-full z-50 mt-2 w-52 -translate-x-1/2 overflow-hidden rounded-lg border bg-popover shadow-lg",
+            "animate-in fade-in-0 zoom-in-95"
+          )}
+        >
+          <button
+            className="flex w-full items-center gap-3 px-4 py-3 text-sm transition-colors hover:bg-accent"
+            onClick={() => {
+              setShowCallMenu(false);
+              router.push(`/call/${callId}`); // instant
+            }}
+          >
+            <Play className="h-4 w-4 text-muted-foreground" />
+            Start call now
+          </button>
+          <div className="h-px bg-border" />
+          <button
+            className="flex w-full items-center gap-3 px-4 py-3 text-sm transition-colors hover:bg-accent"
+            onClick={() => {
+              setShowCallMenu(false);
+              setShowCallLinkDialog(true); // instant
+            }}
+          >
+            <Clock className="h-4 w-4 text-muted-foreground" />
+            Schedule for later
+          </button>
+        </div>
+      )}
 
       <Dialog open={showCallLinkDialog} onOpenChange={setShowCallLinkDialog}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Here is the link to your meeting</DialogTitle>
+            <DialogTitle className="text-xl">Your call is ready</DialogTitle>
             <DialogDescription>
-              This link is your gateway to connect with your guests at the appointed time. Make sure to copy and
-              save this link, as you&nbsp;ll need it to join the call too.
+              Share this link with the people you want to invite. You'll also use it to join when the time comes.
             </DialogDescription>
           </DialogHeader>
-          <div className='w-full flex flex-col justify-between items-end mb-2'>
-            <div className='w-full space-y-1 my-4'>
-              <Label htmlFor="link">Call Link</Label>
-              <Input
-                disabled
-                placeholder={`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`}
-                required
-                id="link"
-                className={cn('w-full border-ring')}
-              />
-            </div>
-            <Button
-              size='lg'
-              className="rounded-md font-normal flex mt-2 md:mt-0 md:ml-2 ml-auto w-full md:w-fit"
-              onClick={async () => {
-                await copyToClipboard(`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`);
-                if (isCopied) {
-                  toast({
-                    title: 'Copied to clipboard',
-                    description: 'The invite link has been copied to your clipboard.',
-                    variant: 'default'
-                  });
-                }
-              }}
-            >
-              Copy Link
-            </Button>
+
+          <div className="mt-2 space-y-1.5">
+            <Label htmlFor="call-link">Call link</Label>
+            <Input
+              id="call-link"
+              readOnly
+              value={meetingUrl}
+              className="text-sm text-muted-foreground"
+            />
           </div>
+
+          <Button
+            className="mt-4 w-full"
+            onClick={async () => {
+              await copyToClipboard(meetingUrl);
+              toast({
+                title: "Link copied",
+                description: "Share it with your participants.",
+              });
+            }}
+          >
+            {isCopied ? "Copied!" : "Copy link"}
+          </Button>
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

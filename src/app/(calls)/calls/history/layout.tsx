@@ -1,12 +1,11 @@
 export default function HistoryLayout({
-    children
+  children,
 }: {
-    children: React.ReactNode
+  children: React.ReactNode;
 }) {
-
   return (
-    <section className="flex min-h-full flex-col flex-1 self-start w-screen -mt-3 sm:-mt-10 md:pt-14 lg:pt-20">
-        {children}
+    <section className="flex min-h-full w-full flex-1 flex-col">
+      {children}
     </section>
   );
 }

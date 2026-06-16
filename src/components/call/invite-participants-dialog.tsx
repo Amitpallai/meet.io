@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/consistent-type-imports */
 "use client";
+
 import React from "react";
+import { Link2, Share2 } from "lucide-react";
+
 import { env } from "~/env.mjs";
 import { useCallId } from "~/context/call-id-context";
 import useClipboard from "~/hooks/use-copy";
@@ -9,32 +11,29 @@ import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { DialogDescription } from "@radix-ui/react-dialog";
-import { useToast } from "../ui/use-toast";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { InviteIcon } from "@100mslive/react-icons";
+import { useToast } from "../ui/use-toast";
 
 export default function InviteParticipantsDialog() {
   const { toast } = useToast();
   const { callId } = useCallId();
   const { isCopied, copyToClipboard } = useClipboard();
 
+  const meetingUrl = `${env.NEXT_PUBLIC_APP_URL}/call/${callId}`;
+
   const handleCopy = () => {
     void (async () => {
-      await copyToClipboard(`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`);
-      if (isCopied) {
-        toast({
-          title: "Copied to clipboard",
-          description: "The invite link has been copied to your clipboard.",
-          variant: "default",
-        });
-      }
+      await copyToClipboard(meetingUrl);
+      toast({
+        title: "Link copied",
+        description: "Share it with anyone you want to invite.",
+      });
     })();
   };
 
@@ -43,23 +42,21 @@ export default function InviteParticipantsDialog() {
       try {
         if (navigator.share) {
           await navigator.share({
-            title: 'Join my call',
-            text: 'Join my call on Meet.io',
-            url: `${env.NEXT_PUBLIC_APP_URL}/call/${callId}`,
+            title: "Join my call on Meet.io",
+            text: "You've been invited to join a call.",
+            url: meetingUrl,
           });
         } else {
-          // Fallback for browsers that don't support Web Share API
-          await copyToClipboard(`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`);
+          await copyToClipboard(meetingUrl);
           toast({
-            title: "Copied to clipboard",
-            description: "The invite link has been copied to your clipboard.",
-            variant: "default",
+            title: "Link copied",
+            description: "Share it with anyone you want to invite.",
           });
         }
-      } catch (error) {
+      } catch {
         toast({
-          title: "Error sharing",
-          description: "There was an error sharing the link.",
+          title: "Couldn't share",
+          description: "Try copying the link instead.",
           variant: "destructive",
         });
       }
@@ -69,49 +66,48 @@ export default function InviteParticipantsDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="bg-black dark:text-black dark:bg-white text-white">
-         <InviteIcon/> Invite
-        </Button>
+        <button
+          type="button"
+          className="group flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl border bg-card p-6 text-center transition-colors hover:border-primary/40 hover:bg-accent/40"
+        >
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
+            <Link2 className="h-5 w-5" />
+          </span>
+          <span className="text-sm font-medium">Invite people</span>
+          <span className="text-xs text-muted-foreground">
+            Share a link to this call
+          </span>
+        </button>
       </DialogTrigger>
-      <DialogContent>
+
+      <DialogContent className="sm:max-w-[440px]">
         <DialogHeader>
           <DialogTitle className="text-xl">Invite participants</DialogTitle>
-          <DialogDescription className="text-sm text-muted-foreground">
-            Copy the link below and invite participants to this call.
+          <DialogDescription>
+            Share this link with anyone you want to join the call.
           </DialogDescription>
         </DialogHeader>
-        <div className="my-1 h-[1px] w-full bg-slate-500"></div>
-        <DialogFooter className="w-full">
-          <div className="mb-2 flex w-full flex-col items-end justify-between md:flex-row">
-            <div className="w-full space-y-1">
-              <Label htmlFor="link">Link</Label>
-              <Input
-                disabled
-                placeholder={`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`}
-                required
-                id="link"
-                className="w-full"
-              />
-            </div>
-            
-            <Button
-              variant="secondary"
-              size="lg"
-              className="ml-auto mt-2 flex w-full rounded-md font-normal md:ml-2 md:mt-0 md:w-fit"
-              onClick={handleCopy}
-            >
-              Copy
-            </Button>
-            <Button
-              variant="secondary"
-              size="lg"
-              className="ml-2 mt-2 flex w-full rounded-md font-normal md:mt-0 md:w-fit"
-              onClick={handleShare}
-            >
-              Share
-            </Button>
-          </div>
-        </DialogFooter>
+
+        <div className="mt-2 space-y-1.5">
+          <Label htmlFor="invite-link">Meeting link</Label>
+          <Input
+            id="invite-link"
+            readOnly
+            value={meetingUrl}
+            className="text-sm text-muted-foreground"
+          />
+        </div>
+
+        <div className="mt-4 flex gap-2">
+          <Button variant="outline" className="flex-1 gap-2" onClick={handleCopy}>
+            <Link2 className="h-4 w-4" />
+            {isCopied ? "Copied!" : "Copy link"}
+          </Button>
+          <Button className="flex-1 gap-2" onClick={handleShare}>
+            <Share2 className="h-4 w-4" />
+            Share
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

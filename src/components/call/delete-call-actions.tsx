@@ -26,18 +26,24 @@ export default function DeleteCallActions({
             <DropdownMenuTrigger className={cn("cursor-pointer rounded-sm w-8 h-8 inline-flex items-center justify-center hover:bg-accent")}>
                 <Icons.ellipsis className="w-5 h-5 text-primary" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className={cn("mt-1 p-0 shadow-sm bg-white border rounded-sm min-w-[150px]")}>
-                <DropdownMenuLabel className={cn("p-1")}>
-                    <Button 
-                        size="sm"
-                        variant="ghost"
-                        className={cn("w-full justify-start text-red-500 hover:text-red-500 rounded-sm")}
-                        onClick={() => setShowDeleteAlert(true)}
-                    >
-                        Delete
-                    </Button>
-                </DropdownMenuLabel>
-            </DropdownMenuContent>
+          <DropdownMenuContent
+  className={cn(
+    "mt-1 min-w-[150px] rounded-md border bg-popover p-0 text-popover-foreground shadow-md"
+  )}
+>
+  <DropdownMenuLabel className="p-1">
+    <Button
+      size="sm"
+      variant="ghost"
+      className={cn(
+        "w-full justify-start rounded-sm text-destructive hover:bg-destructive/10 hover:text-destructive"
+      )}
+      onClick={() => setShowDeleteAlert(true)}
+    >
+      Delete
+    </Button>
+  </DropdownMenuLabel>
+</DropdownMenuContent>
         </DropdownMenu>
         <DeleteActionAlert
             showDeleteAlert={showDeleteAlert}

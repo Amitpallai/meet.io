@@ -1,4 +1,4 @@
-  "use client"
+'use client';
 import * as React from "react";
 import { signIn } from "next-auth/react";
 import { Icons } from './ui/icons';
@@ -20,34 +20,34 @@ export default function SocialAuthForm () {
   
   const router = useRouter()
 
-  const handleSocialSignIn = (provider: string) => {
+  const handleSocialSignIn = async (provider: string) => {
     setIsSocialLoading((prevLoading) => ({
       ...prevLoading,
       [provider]: true,
     }));
 
-    signIn(provider, { 
-      callbackUrl: searchParams?.get("from") || "/calls",
-      redirect: true,
-    })
-      .then(() => {
-        console.log(`Successfully signed in.`);
-        router.push("/calls");
-      })
-      .catch((error) => {
-        console.error(`Error during ${provider} sign-in:`, error);
-        toast({
-          title: "Error",
-          description: `Failed to sign in with ${provider}. Please try again.`,
-          variant: "destructive",
-        });
-      })
-      .finally(() => {
-        setIsSocialLoading((prevLoading) => ({
-          ...prevLoading,
-          [provider]: false,
-        }));
+    const callbackUrl = searchParams?.get("from") || "/calls";
+
+    const result = await signIn(provider, {
+      callbackUrl,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      console.error(`Error during ${provider} sign-in:`, result.error);
+      toast({
+        title: "Error",
+        description: `Failed to sign in with ${provider}. Please try again.`,
+        variant: "destructive",
       });
+    } else {
+      router.push(callbackUrl);
+    }
+
+    setIsSocialLoading((prevLoading) => ({
+      ...prevLoading,
+      [provider]: false,
+    }));
   };
 
   return (

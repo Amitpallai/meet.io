@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import Link from "next/link";
-import { Badge } from "~/components/ui/badge";
-import { Icons } from "~/components/ui/icons";
+import { ArrowDown } from "lucide-react";
+
 import { formatDate } from "~/lib/date";
 import { getCurrentUser } from "~/lib/session";
 import JoinCallDialog from "~/components/call/join-call-dialog";
@@ -9,54 +9,47 @@ import InviteParticipantsDialog from "~/components/call/invite-participants-dial
 import CreateCallCard from "~/components/call/create-call-card";
 import { Button } from "~/components/ui/button";
 
-
 export const metadata: Metadata = {
-  title: "Meet.io - Calls",
-  description:
-    "Access your Calls to manage and join your video calls seamlessly.",
+  title: "Meet.io – Calls",
+  description: "Start, join, or schedule video calls.",
 };
-
 
 export default async function CallsPage() {
   const user = await getCurrentUser();
+  const firstName = user?.name?.split(" ")[0] ?? "there";
 
   return (
-    <div className="w-full">
-      <section className="container mx-auto mb-8 max-w-[1400px] space-y-6 md:mb-12 lg:mb-16">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div>
-            <Badge variant="secondary">{formatDate(new Date())}</Badge>
-            <h1 className="mt-4 px-4 text-4xl font-semibold leading-none md:px-8 md:text-5xl lg:text-[50px]">
-              {`Welcome, ${user?.name?.split(' ')[0] ?? 'User'}`}
-            </h1>
-          </div>
-        </div>
-      </section>
-      <section className="mx-auto space-y-6 ">
-        <div className="mx-auto w-full max-w-[1200px] text-center px-1">
-          <div className="grid w-full grid-cols-1 place-items-center gap-3 rounded-2xl border-2 bg-card/50 p-4 px-4 sm:grid-cols-3 md:px-8 lg:grid-cols-3 lg:gap-5">
-            <CreateCallCard  />
-            <JoinCallDialog />
-            <InviteParticipantsDialog />
-          </div>
-          <Link
-            href={{
-              pathname: "/calls/history",
-              query: { page: 1, per_page: 10 },
-            }}
-            className="inline-flex items-center"
-          >
-            <Button size="lg" className="mx-auto mt-8 rounded-full md:mt-12">
-              View Call History
-              <Icons.arrow
-                width={14}
-                height={14}
-                className="ml-2 rotate-90 text-secondary"
-              />
-            </Button>
-          </Link>
-        </div>
-      </section>
+    <div className="flex min-h-[calc(100vh-4rem)] w-full flex-col items-center justify-center px-4 py-16">
+      {/* Greeting */}
+      <div className="mb-12 text-center">
+        <p className="mb-1 text-sm font-medium text-muted-foreground">
+          {formatDate(new Date())}
+        </p>
+        <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
+          Good to see you, {firstName}
+        </h1>
+        <p className="mt-3 text-base text-muted-foreground">
+          What would you like to do today?
+        </p>
+      </div>
+
+      {/* Action cards */}
+      <div className="grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
+        <CreateCallCard />
+        <JoinCallDialog />
+        <InviteParticipantsDialog />
+      </div>
+
+      {/* Call history link */}
+      <Link
+        href={{ pathname: "/calls/history", query: { page: 1, per_page: 10 } }}
+        className="mt-12"
+      >
+        <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
+          View call history
+          <ArrowDown className="h-3.5 w-3.5" />
+        </Button>
+      </Link>
     </div>
   );
 }
