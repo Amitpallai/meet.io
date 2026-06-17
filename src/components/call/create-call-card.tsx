@@ -56,7 +56,7 @@ export default function CreateCallCard() {
   const meetingUrl = `${env.NEXT_PUBLIC_APP_URL}/call/${callId}`;
 
   return (
-    <div className="relative call-menu w-full h-full">
+    <div className="call-menu relative h-full w-full">
       <button
         type="button"
         className="group flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl border bg-card p-6 text-center transition-colors hover:border-primary/40 hover:bg-accent/40"
@@ -107,7 +107,7 @@ export default function CreateCallCard() {
           <DialogHeader>
             <DialogTitle className="text-xl">Your call is ready</DialogTitle>
             <DialogDescription>
-              Share this link with the people you want to invite. You'll also use it to join when the time comes.
+              {`Share this link with the people you want to invite. You'll also use it to join when the time comes.`}
             </DialogDescription>
           </DialogHeader>
 

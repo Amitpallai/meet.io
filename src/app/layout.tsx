@@ -1,4 +1,3 @@
-import "../styles/globals.css";
 import RoomProvider from "~/components/room-provider";
 import CallIdProvider from "~/context/call-id-context";
 import { Toaster } from "~/components/ui/toaster";

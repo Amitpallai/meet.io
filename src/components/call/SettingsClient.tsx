@@ -59,7 +59,7 @@ export default function SettingsClient({
   // Notification handlers
   const handleNotificationChange = (key: string, value: boolean) => {
     // This would be where you'd update the backend
-    console.log(`${key} set to: ${value}`);
+ console.log(`${key} set to: ${String(value)}`);
   };
 
   return (
