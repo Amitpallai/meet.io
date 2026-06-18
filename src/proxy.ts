@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { absoluteUrl } from './utils/absoluteUrl';
 import { getToken } from 'next-auth/jwt';
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
 
   const session = await getToken({ req });
 

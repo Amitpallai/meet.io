@@ -8,16 +8,14 @@ await import("./src/env.mjs");
 const config = {
   reactStrictMode: true,
 
-  /**
-   * If you have `experimental: { appDir: true }` set, then you must comment the below `i18n` config
-   * out.
-   *
-   * @see https://github.com/vercel/next.js/issues/41980
-   */
-  // i18n: {
-  //   locales: ["en"],
-  //   defaultLocale: "en",
-  // },
+  // Fix 1: Set turbopack root to silence the workspace root warning
+  turbopack: {
+    root: process.cwd(),
+  },
+
+  // Fix 2: Rename middleware to proxy (rename your middleware.ts file too)
+  // No config change needed here — just rename the file
+
   images: {
     remotePatterns: [
       {
@@ -35,4 +33,5 @@ const config = {
     ],
   },
 };
+
 export default config;
