@@ -2,7 +2,8 @@
 
 Meet.io is a professional video conferencing platform built with Next.js, TypeScript, and the 100ms SDK. It delivers a secure, responsive, and fully featured meeting experience for modern remote collaboration.
 
-<img width="1917" height="1071" alt="Screenshot 2026-11-14 203856" src="https://github.com/user-attachments/assets/789e1bc3-ae7e-4e42-ac57-c9ca522c2ac7" />
+<img width="1901" height="1078" alt="Screenshot 2026-11-14 201336" src="https://github.com/user-attachments/assets/7f61a7b2-eb35-4bc2-b459-1621a2db469f" />
+
 
 ## Features
 
