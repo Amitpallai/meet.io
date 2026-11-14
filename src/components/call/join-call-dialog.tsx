@@ -81,13 +81,13 @@ export default function JoinCallDialog() {
       <DialogTrigger asChild>
         <button
           type="button"
-          className="group flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl border bg-card p-6 text-center transition-colors hover:border-primary/40 hover:bg-accent/40"
+          className="bg-card hover:border-primary/40 hover:bg-accent/40 group flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl border p-6 text-center transition-colors"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
+          <span className="bg-primary/10 text-primary group-hover:bg-primary/15 flex h-11 w-11 items-center justify-center rounded-full transition-colors">
             <LogIn className="h-5 w-5" />
           </span>
           <span className="text-sm font-medium">Join a call</span>
-          <span className="text-xs text-muted-foreground">
+          <span className="text-muted-foreground text-xs">
             Enter a meeting link or ID
           </span>
         </button>
@@ -111,7 +111,7 @@ export default function JoinCallDialog() {
               autoComplete="name"
             />
             {errors.name && typeof errors.name.message === "string" && (
-              <p className="text-sm text-destructive">{errors.name.message}</p>
+              <p className="text-destructive text-sm">{errors.name.message}</p>
             )}
           </div>
 
@@ -125,17 +125,19 @@ export default function JoinCallDialog() {
             />
             {errors.meetingLink &&
               typeof errors.meetingLink.message === "string" && (
-                <p className="text-sm text-destructive">
+                <p className="text-destructive text-sm">
                   {errors.meetingLink.message}
                 </p>
               )}
           </div>
 
           <DialogFooter className="mt-2">
-            <Button type="submit" className="w-full" disabled={isJoinCallLoading}>
-              {isJoinCallLoading && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isJoinCallLoading}
+            >
+              
               Join call
             </Button>
           </DialogFooter>
@@ -143,4 +145,4 @@ export default function JoinCallDialog() {
       </DialogContent>
     </Dialog>
   );
-} 
+}
