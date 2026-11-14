@@ -71,14 +71,14 @@ export default function SettingsClient({
             key={id}
             onClick={() => setActive(id)}
             className={cn(
-              "flex flex-shrink-0 items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors md:w-full",
+              "flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors md:w-full",
               active === id
                 ? "bg-accent text-foreground"
                 : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
               id === "danger" && active !== "danger" && "text-destructive hover:text-destructive"
             )}
           >
-            <Icon className="h-4 w-4 flex-shrink-0" />
+            <Icon className="h-4 w-4 shrink-0" />
             <span>{label}</span>
             <ChevronRight className="ml-auto hidden h-3.5 w-3.5 md:block" />
           </button>
@@ -226,7 +226,7 @@ export default function SettingsClient({
                       "h-8 w-8 rounded-full border",
                       t === "light" ? "bg-white" : 
                       t === "dark" ? "bg-neutral-900" : 
-                      "bg-gradient-to-br from-white to-neutral-900"
+                      "bg-linear-to-br from-white to-neutral-900"
                     )} />
                     <span className="text-xs font-medium">{t}</span>
                   </button>

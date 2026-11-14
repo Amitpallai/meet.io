@@ -29,9 +29,9 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden pb-24 pt-40 md:pb-32 md:pt-48">
-      <div className="pointer-events-none absolute -top-32 left-1/2 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-[#FF5D3A]/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 h-120 w-120 -translate-x-1/2 rounded-full bg-[#FF5D3A]/10 blur-[120px]" />
 
-      <div className="container mx-auto grid max-w-[1200px] gap-16 px-4 md:grid-cols-2 md:items-center md:gap-12">
+      <div className="container mx-auto grid max-w-300 gap-16 px-4 md:grid-cols-2 md:items-center md:gap-12">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export function Hero() {
             {TILES.map((gradient, i) => (
               <motion.div
                 key={i}
-                className={`relative aspect-square rounded-xl bg-gradient-to-br ${gradient}`}
+                className={`relative aspect-square rounded-xl bg-linear-to-br ${gradient}`}
                 animate={
                   activeTile === i
                     ? {

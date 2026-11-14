@@ -18,7 +18,7 @@ export default async function HomePageLayout({
           {user ? (
             <Link href="/calls">
               <Button size="sm" className="rounded-md">
-                Dashboard
+                Calls
               </Button>
             </Link>
           ) : (
